@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var controlPanelRoute = require('./routes/controlPanel');
 
 var app = express();
+var proxy = require("./lib/proxy");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -17,6 +18,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+
+app.use(proxy());
+
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.use('/', controlPanelRoute);
@@ -36,6 +40,5 @@ app.use(function(err, req, res, next) {
         error: err
     });
 });
-
 
 module.exports = app;
