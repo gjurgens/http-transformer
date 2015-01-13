@@ -9,6 +9,8 @@ var controlPanelRoute = require('./routes/controlPanel');
 var app = express();
 var proxy = require("./lib/proxy");
 
+
+app.set("x-powered-by",false);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
