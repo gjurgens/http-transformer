@@ -162,6 +162,10 @@
                     {
                         "type":"requestMatchers",
                         "applied":true
+                    },
+                    {
+                        "type":"statusCode",
+                        "pattern":"200|304"
                     }
                 ],
                 "transformers":[
