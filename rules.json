@@ -147,6 +147,10 @@
                         "type":"header",
                         "name":"X-Despegar",
                         "pattern":"despegar"
+                    },
+                    {
+                        "type":"protocol",
+                        "pattern":"http"
                     }
                 ],
                 "transformers":[
@@ -162,16 +166,53 @@
                     {
                         "type":"requestMatchers",
                         "applied":true
-                    },
-                    {
-                        "type":"statusCode",
-                        "pattern":"200|304"
                     }
                 ],
                 "transformers":[
                     {
                         "type":"content",
-                        "pattern":["ar\\.staticontent\\.com\\/|www\\.despegar\\.com\\.ar\\/","g","localhost:3000/"]
+                        "pattern":["\\/\\/ar\\.staticontent\\.com\\/|\\/\\/www\\.despegar\\.com\\.ar\\/","g","//localhost:3000/"]
+                    }
+                ]
+            },
+            "target":"www.despegar.com.ar"
+        },
+        {
+            "request":{
+                "matchers":[
+                    {
+                        "type":"header",
+                        "name":"X-Despegar",
+                        "pattern":"despegar"
+                    },
+                    {
+                        "type":"protocol",
+                        "pattern":"https"
+                    }
+                ],
+                "transformers":[
+                    {
+                        "type":"header",
+                        "name":"host",
+                        "pattern":"www.despegar.com.ar"
+                    }
+                ]
+            },
+            "response":{
+                "matchers":[
+                    {
+                        "type":"requestMatchers",
+                        "applied":true
+                    }
+                ],
+                "transformers":[
+                    {
+                        "type":"content",
+                        "pattern":["a248\\.e\\.akamai\\.net\\/","g",""]
+                    },
+                    {
+                        "type":"content",
+                        "pattern":["www\\.despegar\\.com\\.ar\\/","g","localhost:3001/"]
                     }
                 ]
             },
@@ -179,4 +220,3 @@
         }
     ]
 }
-

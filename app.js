@@ -15,7 +15,10 @@ app.set('view engine', 'jade');
 
 app.use(logger('dev'));
 
-app.use(proxy());
+app.use(proxy({
+    "port":app.get("port")||3000,
+    "ssl_port":app.get("ssl_port")||3001
+}));
 
 app.use(express.static(path.join(__dirname, 'static')));
 
