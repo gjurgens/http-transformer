@@ -11,12 +11,29 @@ rules:
         # The staring path: /test/
         # and should be an HTTP request
         # ####################################################################
-
         name: "Sample rule #1"
         target: "localhost:9000"
         request:
             matchers:
-                - 
+                -
+                    type: "OR"
+                    matchers:
+                        -
+                            type: "header"
+                            name: "X-OR"
+                            pattern: "yes"
+                        -
+                            type: "NOT"
+                            matchers:
+                                -
+                                    type: "header"
+                                    name: "X-OR"
+                                    pattern: "true"
+                        -
+                            type: "header"
+                            name: "X-OR"
+                            pattern: "1"
+                -
                     type: "header"
                     name: "X-Version"
                     pattern: "test"
@@ -62,19 +79,25 @@ rules:
                         - "127.0.0.1"
         response:
             matchers:
-                - 
-                    type: "header"
-                    name: "X-Version"
-                    pattern: "test"
-                - 
-                    type: "header"
-                    name: "content-type"
-                    pattern: "text/html"
+                -
+                    type: "AND"
+                    matchers:
+                        -
+                            type: "header"
+                            name: "X-Version"
+                            pattern: "test"
+                        -
+                            type: "header"
+                            name: "content-type"
+                            pattern: "text/html"
             transformers:
                 - 
                     type: "header"
                     name: "X-Modified"
                     pattern: "yes"
+
+
+
 
 
     -
@@ -106,6 +129,10 @@ rules:
                     pattern:
                         - "(127\\.0\\.0\\.1)"
                         - "LOCALHOST"
+
+
+
+
     - 
         name: "Sample rule #3"
         request:
@@ -140,6 +167,11 @@ rules:
                         - "(test\\*\\([0-9]\\))"
                         - "ig"
                         - "$1*(2)"
+
+
+
+
+
     - 
         name: "Sample rule #3"
         target: "www.despegar.com.ar"
@@ -169,6 +201,11 @@ rules:
                         - "\\/\\/ar\\.staticontent\\.com\\/|\\/\\/www\\.despegar\\.com\\.ar\\/"
                         - "g"
                         - "//localhost:3000/"
+
+
+
+
+
     -
         name: "Sample rule #4"
         target: "www.despegar.com.ar"
@@ -204,5 +241,3 @@ rules:
                         - "www\\.despegar\\.com\\.ar\\/"
                         - "g"
                         - "localhost:3001/"
-
-
