@@ -1,0 +1,16 @@
+rules:
+    -
+        name: "Test rule"
+        target: "localhost:9000"
+        request:
+            matchers:
+                -
+                    type: "header"
+                    name: "X-TestFile"
+                    pattern: "true"
+
+            transformers:
+                -
+                    type: "header"
+                    name: "X-Injected"
+                    pattern: "from file"
