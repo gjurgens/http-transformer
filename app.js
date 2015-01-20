@@ -7,6 +7,7 @@ var controlPanelRoute = require('./routes/controlPanel');
 var app = express();
 var proxy = require("./lib/proxy");
 
+var requestId = 1;
 
 app.set("x-powered-by",false);
 // view engine setup
@@ -14,6 +15,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+
+app.use(function(req, res, next){
+    req.id = requestId++;
+    next();
+});
 
 app.use(proxy({
     "port":app.get("port")||3000,
