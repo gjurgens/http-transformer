@@ -1,12 +1,17 @@
 #!/usr/bin/env node
 var debug = require('debug')('http-transformer');
-var app = require('../app');
+var App = require('../app');
 var https = require('https');
 var http = require('http');
 fs = require('fs');
 
-app.set('port', process.env.PORT || 3000);
-app.set('ssl_port', process.env.PORT || 3001);
+var options = {
+  "port":process.env.PORT||3000,
+  "ssl_port":process.env.SSL_PORT||3001,
+  "rules":"rules"
+};
+
+var app = App(options);
 
 /*
 var server = app.listen(app.get('port'), function() {
@@ -14,7 +19,7 @@ var server = app.listen(app.get('port'), function() {
 });
 */
 
-http.createServer(app).listen(app.get('port'));
+http.createServer(app).listen(options.port);
 
 var sslOptions = {
   key: fs.readFileSync('./ssl/server.key'),
@@ -23,4 +28,4 @@ var sslOptions = {
   requestCert: true,
   rejectUnauthorized: false
 };
-https.createServer(sslOptions, app).listen(app.get('ssl_port'));
+https.createServer(sslOptions, app).listen(options.ssl_port);
