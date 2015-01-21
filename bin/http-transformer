@@ -5,6 +5,7 @@ var https = require('https');
 var http = require('http');
 var fs = require('fs');
 var commander = require("commander");
+var path = require("path");
 
 
 commander
@@ -32,9 +33,9 @@ var server = app.listen(app.get('port'), function() {
 http.createServer(app).listen(options.port);
 
 var sslOptions = {
-  key: fs.readFileSync('./ssl/server.key'),
-  cert: fs.readFileSync('./ssl/server.crt'),
-  ca: fs.readFileSync('./ssl/ca.crt'),
+  key: fs.readFileSync(path.join(__dirname,'..','ssl','server.key')),
+  cert: fs.readFileSync(path.join(__dirname,'..','ssl','server.crt')),
+  ca: fs.readFileSync(path.join(__dirname,'..','ssl','ca.crt')),
   requestCert: true,
   rejectUnauthorized: false
 };
