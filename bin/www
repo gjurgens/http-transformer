@@ -3,12 +3,22 @@ var debug = require('debug')('http-transformer');
 var App = require('../app');
 var https = require('https');
 var http = require('http');
-fs = require('fs');
+var fs = require('fs');
+var commander = require("commander");
+
+
+commander
+    .usage('[options]')
+    .option('-p, --port <n>', 'HTTP listen port', parseInt)
+    .option('-s, --sslport <n>', 'HTTPS listen port', parseInt)
+    .option('-r, --rules <s>', 'Rules directory/file');
+
+commander.parse(process.argv);
 
 var options = {
-  "port":process.env.PORT||3000,
-  "ssl_port":process.env.SSL_PORT||3001,
-  "rules":"rules"
+  "port":commander.port||process.env.PORT||3000,
+  "ssl_port":commander.sslport||process.env.SSL_PORT||3001,
+  "rules":commander.rules
 };
 
 var app = App(options);
